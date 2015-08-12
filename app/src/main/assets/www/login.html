@@ -1,0 +1,19 @@
+<html>
+<body align="center">
+<h1>Login to Read it</h1>
+
+<div><input type="text" id="userName"></input></div>
+<div><input type="password" id="password"></input></div>
+<div><input type="button" value="Login" onClick="login()" id="loginButton"></input>
+</body>
+<script type="text/javascript" src="login.js"></script>
+<script type="text/javascript">
+			function login()
+			{
+				var userName = document.getElementById("userName").value
+				var password = document.getElementById("password").value
+				Bridge.login(userName,password);
+			}
+
+</script>
+</html>
