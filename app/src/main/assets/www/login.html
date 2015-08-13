@@ -1,19 +1,17 @@
 <html>
-<body align="center">
-<h1>Login to Read it</h1>
+	<body align="center" onLoad="applyBindings();">
+		<h1>Login to Read it</h1>
+		<div><input type="text" data-bind="value: userName" id="userName"></input></div>
+		<div><input type="password" data-bind="value: password" id="password"></input></div>
+		<div><input type="button" value="Login" onClick="login()" id="loginButton"></input>
+		</body>
 
-<div><input type="text" id="userName"></input></div>
-<div><input type="password" id="password"></input></div>
-<div><input type="button" value="Login" onClick="login()" id="loginButton"></input>
-</body>
-<script type="text/javascript" src="login.js"></script>
-<script type="text/javascript">
+		<script type="text/javascript">
 			function login()
 			{
-				var userName = document.getElementById("userName").value
-				var password = document.getElementById("password").value
-				Bridge.login(userName,password);
+				Bridge.login(0);
 			}
-
-</script>
+		</script>
+		<script type="text/javascript" src="login.js"></script>
+		<script type="text/javascript" src="knockout.js"></script>
 </html>

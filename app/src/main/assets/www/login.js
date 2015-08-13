@@ -1,13 +1,19 @@
 var Bridge = {};
 
-Bridge.login = function(userName,password)
+Bridge.login = function(state)
 {
 	var BRIDGE_KEY = "BRIDGE_KEY";
-	var loginData = {method:"login",userName: userName,password: password};
-	prompt(BRIDGE_KEY,JSON.stringify(loginData));
+	var message = {method:"login",state: state};
+	prompt(READIT_KEY,JSON.stringify(message));	
 }
 
-Bridge.loginSuccess = function(data)
+var UserData = function()
 {
-	alert(data.userId);
+	userName = "jhansi";
+	password = "123456aA";
+}
+
+function applyBindings()
+{
+	ko.applyBindings(new UserData());
 }

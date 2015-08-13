@@ -11,6 +11,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import org.json.JSONException;
@@ -32,7 +33,8 @@ public class MainActivity extends ActionBarActivity {
     protected void init() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         webView = (WebView) findViewById(R.id.webContent);
-        webView.loadUrl("file:///android_asset/www/login.html");
+        webView.loadUrl("file:///android_asset/www/list.html");
+        webView.setWebViewClient(new DefaultWebViewClient());
         webView.setWebChromeClient(new BridgeWCClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -44,24 +46,21 @@ public class MainActivity extends ActionBarActivity {
         public boolean onJsPrompt(WebView view, String url, String title, String message, JsPromptResult result) {
             Log.d("", message);
             if (title.equals("BRIDGE_KEY")) {
-                try {
-                    JSONObject jsonObject = new JSONObject(message);
-                    String userName = jsonObject.getString("userName");
-                    String password = jsonObject.getString("password");
-                    startProgressBar();
-                    validate(userName, password);
-                    progressBar.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            onLoginSuccess();
-                        }
-                    }, 2000);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
                 return true;
             }
             return super.onJsPrompt(view, url, title, message, result);
+        }
+
+    }
+
+    private class DefaultWebViewClient extends WebViewClient
+    {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Log.d("", "--onPageFinished--");
+            listLoad();
         }
     }
 
@@ -77,9 +76,10 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-    private void onLoginSuccess() {
-        hideProgressBar();
-        webView.loadUrl("javascript:Bridge.loginSuccess({userId:1132})");
+    private void listLoad() {
+        webView.loadUrl("javascript:onListLoad([{title:'Docker'},{title:'Internet of things'},{title:'My life'},{title:'5 points'}," +
+                "{title:'Docker'},{title:'Internet of things'},{title:'My life'},{title:'5 points'}," +
+                "{title:'Docker'},{title:'Internet of things'},{title:'My life'},{title:'5 points'}])");
     }
 
 }

@@ -1,0 +1,27 @@
+<html>
+
+	<head>
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+	
+	<body onLoad="renderList();">
+<!-- 		<div><input type="text" data-bind="value: userName" id="userName"></input></div>
+		<div><input type="password" data-bind="value: password" id="password"></input></div>
+		<div><input type="button" value="Login" onClick="login()" id="loginButton"></input>
+ -->
+ 		<ul class="collection" data-bind="foreach: items">
+ 			<li class="collection-item">
+ 				<span data-bind="text:title"></span>
+ 			</li> 			
+ 			</ul>
+ 		</body>		
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="knockout.js"></script>
+		<script type="text/javascript" src="list.js"></script>
+</html>
