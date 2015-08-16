@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ReadItHybrid.iml" filepath="$PROJECT_DIR$/ReadItHybrid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidHybrid.iml" filepath="$PROJECT_DIR$/androidHybrid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
