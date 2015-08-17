@@ -29,5 +29,6 @@ var renderList = function()
 
 var onListLoad = function(list)
 {
+alert(list);
 	appViewModel.pushItems(list);
 }

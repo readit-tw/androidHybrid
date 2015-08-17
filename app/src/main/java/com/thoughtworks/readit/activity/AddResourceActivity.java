@@ -67,7 +67,7 @@ public class AddResourceActivity extends Activity {
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        Toast.makeText(AddResourceActivity.this, "Please try later!", Toast.LENGTH_LONG);
                     }
                 });
 

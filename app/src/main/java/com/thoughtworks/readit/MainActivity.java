@@ -1,12 +1,16 @@
 package com.thoughtworks.readit;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.thoughtworks.readit.activity.AddResourceActivity;
 import com.thoughtworks.readit.domain.Resource;
@@ -61,16 +65,23 @@ public class MainActivity extends Activity {
 
         RestService service = restAdapter.create(RestService.class);
 
+        ConnectivityManager cm =
+                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
         service.listResources(new Callback<List<Resource>>() {
             @Override
             public void success(List<Resource> resources, Response response) {
 
                 // TODO - get rid of hard coded stuff
-                resources = new ArrayList<>();
-                Resource r = new Resource();
-                r.setLink("google.com");
-                r.setTitle("Search");
-                resources.add(r);
+//                resources = new ArrayList<>();
+//                Resource r = new Resource();
+//                r.setLink("google.com");
+//                r.setTitle("Search");
+//                resources.add(r);
 
                 Gson gson = new Gson();
                 String json = gson.toJson(resources);
@@ -80,6 +91,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void failure(RetrofitError error) {
+                Toast.makeText(MainActivity.this, "Please try later!", Toast.LENGTH_LONG);
             }
         });
     }
