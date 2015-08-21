@@ -2,9 +2,11 @@ package com.thoughtworks.readit;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.test.AndroidTestCase;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+
+import com.thoughtworks.readit.activity.MainActivity;
+
 import junit.framework.Assert;
 
 public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
