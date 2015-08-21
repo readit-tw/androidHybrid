@@ -31,7 +31,7 @@ public class AddResourceActivity extends AppCompatActivity {
         setContentView(R.layout.add_resource);
         init();
         webView = (WebView) findViewById(R.id.addResourceWebView);
-        webView.loadUrl("file:///android_asset/www/add.html");
+        webView.loadUrl("file:///android_asset/www/addResource.html");
         webView.setWebChromeClient(new BridgeWCClient());
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);

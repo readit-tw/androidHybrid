@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         webView = (WebView) findViewById(R.id.webContent);
-        webView.loadUrl("file:///android_asset/www/listResource.html");
+        webView.loadUrl("file:///android_asset/www/resourceList.html");
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
     }
