@@ -10,8 +10,8 @@
 	
 	<body onLoad="renderList();">
 		<ul class="collection" data-bind="foreach: items">
- 			<li class="collection-item">
- 				<span data-bind="text:title"></span>
+			<li class="collection-item" data-bind="click: $parent.itemClick">
+ 				<span data-bind="text:title" ></span>
  			</li> 			
 		</ul>
 	</body>
