@@ -72,13 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         RestService service = restAdapter.create(RestService.class);
 
-        ConnectivityManager cm =
-                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
         service.listResources(new Callback<List<Resource>>() {
             @Override
             public void success(List<Resource> resources, Response response) {
@@ -87,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String json = gson.toJson(resources);
 
-                Log.d("","Content Loaded"+json);
+                Log.d("","Content Loaded: "+json);
 
                 webView.loadUrl("javascript:onListLoad(" + json + ")");
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(MainActivity.this, "Please try later!", Toast.LENGTH_LONG);
+                Toast.makeText(MainActivity.this, "Please try later!", Toast.LENGTH_LONG).show();
             }
         });
     }

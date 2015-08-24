@@ -85,7 +85,6 @@ public class AddResourceActivity extends AppCompatActivity {
                 service.shareResource(resource, new Callback<Resource>() {
                     @Override
                     public void success(Resource resource, Response response) {
-                        // TODO -  Show success message - test ?
                         Toast.makeText(AddResourceActivity.this, "Successfully added!", Toast.LENGTH_LONG).show();
 
                         Intent addResourceIntent = new Intent(AddResourceActivity.this, MainActivity.class);
