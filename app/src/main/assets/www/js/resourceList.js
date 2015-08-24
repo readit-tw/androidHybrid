@@ -18,6 +18,10 @@ var AppViewModel = function()
            self.items.push(list[i]);
      }
  	}
+    self.itemClick = function (item) {
+     prompt("LIST_ITEM_CLICK", item.link);
+    };
+
 }
 
 var appViewModel = new AppViewModel();
@@ -29,6 +33,5 @@ var renderList = function()
 
 var onListLoad = function(list)
 {
-    alert(list);
 	appViewModel.pushItems(list);
 }
