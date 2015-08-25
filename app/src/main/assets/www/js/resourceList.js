@@ -19,7 +19,7 @@ var AppViewModel = function() {
      }
  	}
     self.itemClick = function (item) {
-     prompt("LIST_ITEM_CLICK", item.link);
+     ListView.onItemClick(item.link);
     };
 
 }
