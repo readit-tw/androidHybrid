@@ -1,5 +1,6 @@
 package com.thoughtworks.readit.activity;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -7,8 +8,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
@@ -41,7 +47,67 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
+        }
+        return true;
+    }
+
+    private void handleIntent(Intent intent) {
+
+        webView = (WebView) findViewById(R.id.webContent);
+        webView.loadUrl("file:///android_asset/www/resourceList.html");
+        webView.addJavascriptInterface(new JSObject(),"ListView");
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint("http://readit.thoughtworks.com")
+                    .build();
+
+            RestService service = restAdapter.create(RestService.class);
+
+            service.searchListResources(query, new Callback<List<Resource>>() {
+                @Override
+                public void success(List<Resource> resources, Response response) {
+                    Gson gson = new Gson();
+                    String json = gson.toJson(resources);
+
+                    Log.d("", "Content Loaded" + json);
+                    webView.loadUrl("javascript:onListLoad(" + json + ")");
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(MainActivity.this, "Please try later!", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            init();
+        }
     }
 
     protected void init() {
@@ -49,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setLogo(R.drawable.app_icon);
-        
+        setSupportActionBar(toolbar);
+
         addResourceButton = (FloatingActionButton) findViewById(R.id.addResourceButton);
 
         addResourceButton.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +127,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        webView = (WebView) findViewById(R.id.webContent);
-        webView.loadUrl("file:///android_asset/www/resourceList.html");
-        webView.addJavascriptInterface(new JSObject(),"ListView");
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
     }
 
     private class WebViewClient extends android.webkit.WebViewClient {
@@ -75,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void openWebContent(String url)
-    {
+    private void openWebContent(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
@@ -92,10 +153,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(List<Resource> resources, Response response) {
 
-                // TODO - get rid of hard coded stuff
                 Gson gson = new Gson();
                 String json = gson.toJson(resources);
-
 
                 Log.d("", "Content Loaded" + json);
 
@@ -118,11 +177,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class JSObject
-    {
+    private class JSObject  {
         @JavascriptInterface
-        public void onItemClick(String link)
-        {
+        public void onItemClick(String link) {
             openWebContent(link);
         }
     }
