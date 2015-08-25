@@ -12,11 +12,12 @@
 	
 	<body onLoad="renderList();">
 		<ul class="collection" data-bind="foreach: items">
-			<li class="collection-item avatar" data-bind="click: $parent.itemClick">
+			<li class="collection-item " data-bind="click: $parent.itemClick">
 				<!--<i class="material-icons circle red">play_arrow</i>-->
-				<img data-bind="attr:{ src: baseUrl }" class="circle">
+				<img data-bind="attr:{ src: baseUrl }" class="circle"/>
 
  				<span class="title" data-bind="text:title" ></span>
+				<a href="#!" class="secondary-content"><i class="material-icons">share</i></a>
  			</li> 			
 		</ul>
 	</body>

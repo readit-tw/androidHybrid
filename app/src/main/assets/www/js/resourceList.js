@@ -13,9 +13,7 @@ var AppViewModel = function() {
 	self.pushItems = function(list) {
      for(var i = 0; i < list.length; i++) {
      	 var listItem = list[i];
-     	 alert(listItem.link);
      	 listItem.baseUrl = extractDomain(listItem.link);
-     	 alert(listItem.baseUrl);
          self.items.push(listItem);
 
      }
