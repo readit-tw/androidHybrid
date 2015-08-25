@@ -41,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-
     }
 
     protected void init() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
+        toolbar.setLogo(R.drawable.app_icon);
+        
         addResourceButton = (FloatingActionButton) findViewById(R.id.addResourceButton);
 
         addResourceButton.setOnClickListener(new View.OnClickListener() {
