@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webContent);
         webView.loadUrl("file:///android_asset/www/resourceList.html");
-        webView.setWebChromeClient(new BridgeWCClient());
+        webView.addJavascriptInterface(new JSObject(),"ListView");
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
     }
@@ -70,19 +71,6 @@ public class MainActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             loadResources();
-        }
-    }
-
-    private class BridgeWCClient extends WebChromeClient {
-        @Override
-        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-            if (message.equals(LIST_ITEM_CLICK)) {
-                Log.d("", defaultValue);
-                String _url = defaultValue;
-                openWebContent(_url);
-                return true;
-            }
-            return super.onJsPrompt(view, url, message, defaultValue, result);
         }
     }
 
@@ -128,4 +116,13 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+
+    private class JSObject
+    {
+        @JavascriptInterface
+        public void onItemClick(String link)
+        {
+            openWebContent(link);
+        }
+    }
 }
