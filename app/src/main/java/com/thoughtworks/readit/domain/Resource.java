@@ -1,9 +1,12 @@
 package com.thoughtworks.readit.domain;
 
+import java.util.List;
+
 public class Resource {
     private String id;
     private String title;
     private String link;
+    private List<String> tags;
 
     public String getId() {
         return id;
@@ -27,5 +30,13 @@ public class Resource {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
