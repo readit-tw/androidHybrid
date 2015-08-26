@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        webView = (WebView) findViewById(R.id.webContent);
+        webView.loadUrl("file:///android_asset/www/resourceList.html");
+        webView.addJavascriptInterface(new JSObject(),"ListView");
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+
         handleIntent(getIntent());
     }
 
@@ -74,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-
-        webView = (WebView) findViewById(R.id.webContent);
-        webView.loadUrl("file:///android_asset/www/resourceList.html");
-        webView.addJavascriptInterface(new JSObject(),"ListView");
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);

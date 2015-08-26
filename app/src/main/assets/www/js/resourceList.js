@@ -10,16 +10,20 @@ var Item = function(title) {
 var AppViewModel = function() {
 	var self = this;
 	self.items = ko.observableArray(items());
-	self.pushItems = function(list) {
-     for(var i = 0; i < list.length; i++) {
-     	 var listItem = list[i];
-     	 listItem.baseUrl = extractDomain(listItem.link);
-         self.items.push(listItem);
 
-     }
+	self.pushItems = function(list) {
+		self.items.removeAll();
+		 for(var i = 0; i < list.length; i++) {
+			 var listItem = list[i];
+			 // TODO - Identify a situation where cant find favicon and set default image ?
+			 listItem.baseUrl = extractDomain(listItem.link);
+			 self.items.push(listItem);
+
+		 }
  	}
+
     self.itemClick = function (item) {
-     ListView.onItemClick(item.link);
+     	ListView.onItemClick(item.link);
     };
 
 }
