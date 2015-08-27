@@ -41,6 +41,7 @@ function extractDomain(url) {
 	//link.search;    //  '?startIndex=1&pageSize=10'
 	//link.pathname;  //  '/blog/foo/bar'
 	//link.protocol;  //  'http:'
+	alert(link.protocol);
     return link.protocol+ "//" + link.hostname + "/favicon.ico";
 }
 

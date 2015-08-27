@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -32,9 +33,37 @@ public class AddResourceActivity extends AppCompatActivity {
         init();
         webView = (WebView) findViewById(R.id.addResourceWebView);
         webView.loadUrl("file:///android_asset/www/addResource.html");
-        webView.setWebChromeClient(new BridgeWCClient());
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new AddResourceJSObject(), "AddResource");
+    }
+
+    private class AddResourceJSObject  {
+        @JavascriptInterface
+        public void onSave(String message) {
+            Gson resourceGson = new Gson();
+            Resource resource = resourceGson.fromJson(message, Resource.class);
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint("http://readit.thoughtworks.com")
+                    .build();
+
+            RestService service = restAdapter.create(RestService.class);
+
+            service.shareResource(resource, new Callback<Resource>() {
+                @Override
+                public void success(Resource resource, Response response) {
+                    Toast.makeText(AddResourceActivity.this, "Successfully added!", Toast.LENGTH_LONG).show();
+
+                    Intent addResourceIntent = new Intent(AddResourceActivity.this, MainActivity.class);
+                    startActivity(addResourceIntent);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(AddResourceActivity.this, "Please try later!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     private void readIntentContent() {
@@ -56,51 +85,11 @@ public class AddResourceActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.addContent);
     }
 
-    private class WebViewClient extends android.webkit.WebViewClient
-    {
+    private class WebViewClient extends android.webkit.WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             readIntentContent();
         }
-    }
-
-    private class BridgeWCClient extends WebChromeClient {
-
-        @Override
-        public boolean onJsPrompt(WebView view, String url, String title, String message, JsPromptResult result) {
-            Log.d("", message);
-
-            Gson resourceGson = new Gson();
-
-            if (title.equals("ADD_RESOURCE")) {
-
-                Resource resource = resourceGson.fromJson(message, Resource.class);
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("http://readit.thoughtworks.com")
-                        .build();
-
-                RestService service = restAdapter.create(RestService.class);
-
-                service.shareResource(resource, new Callback<Resource>() {
-                    @Override
-                    public void success(Resource resource, Response response) {
-                        Toast.makeText(AddResourceActivity.this, "Successfully added!", Toast.LENGTH_LONG).show();
-
-                        Intent addResourceIntent = new Intent(AddResourceActivity.this, MainActivity.class);
-                        startActivity(addResourceIntent);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(AddResourceActivity.this, "Please try later!", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
-            }
-            return super.onJsPrompt(view, url, title, message, result);
-        }
-
     }
 }
