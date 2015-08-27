@@ -4,7 +4,7 @@
 <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 </style>
 
-    <style name="AppToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:icon">@android:color/transparent</item>
