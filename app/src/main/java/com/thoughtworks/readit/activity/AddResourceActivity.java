@@ -15,6 +15,9 @@ import com.thoughtworks.readit.R;
 import com.thoughtworks.readit.domain.Resource;
 import com.thoughtworks.readit.network.RestService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -38,7 +41,7 @@ public class AddResourceActivity extends AppCompatActivity {
         webView.addJavascriptInterface(new AddResourceJSObject(), "AddResource");
     }
 
-    private class AddResourceJSObject  {
+    private class AddResourceJSObject {
         @JavascriptInterface
         public void onSave(String message) {
             Gson resourceGson = new Gson();
@@ -77,7 +80,7 @@ public class AddResourceActivity extends AppCompatActivity {
     }
 
     private void renderContent(String title, String url) {
-        webView.loadUrl("javascript:addView.renderContent('" + title + "','" + url + "')");
+        webView.loadUrl("javascript:addView.renderInput(\"" + title + "\",\"" + url + "\")");
     }
 
     private void init() {

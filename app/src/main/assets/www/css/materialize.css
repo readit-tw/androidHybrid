@@ -1618,6 +1618,12 @@
 .transparent-text {
   color: transparent !important; }
 
+img.circle {
+  position: absolute; }
+
+span.title {
+  margin-left: 40px; }
+
 /*** Colors ***/
 /*** Badges ***/
 /*** Buttons ***/
