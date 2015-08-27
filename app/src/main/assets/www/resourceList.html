@@ -17,7 +17,7 @@
 				<img data-bind="attr:{ src: baseUrl }" class="circle"/>
 
  				<span class="title" data-bind="text:title" ></span>
-				<a href="#!" class="secondary-content"><i class="material-icons">share</i></a>
+				<a href="#!" class="secondary-content" data-bind="click:$parent.shareClick, clickBubble:false"><i class="material-icons">share</i></a>
  			</li> 			
 		</ul>
 	</body>

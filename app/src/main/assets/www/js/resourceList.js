@@ -26,6 +26,10 @@ var AppViewModel = function() {
      	ListView.onItemClick(item.link);
     };
 
+    self.shareClick = function(item)
+    {	ListView.onShareClick(item.title,item.link);
+    };
+
 }
 
 function extractDomain(url) {
