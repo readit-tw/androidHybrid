@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webContent);
         webView.loadUrl("file:///android_asset/www/resourceList.html");
-        webView.addJavascriptInterface(new JSObject(),"ListView");
+        webView.addJavascriptInterface(new JSObject(), "ListView");
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
 
@@ -157,6 +157,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void shareContent(String title, String url) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // Add data to the intent, the receiving app will decide what to do with it.
+        intent.putExtra(Intent.EXTRA_SUBJECT, title);
+        intent.putExtra(Intent.EXTRA_TEXT, url);
+        startActivity(intent);
+    }
+
     private void loadResources() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://readit.thoughtworks.com")
@@ -192,10 +203,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class JSObject  {
+    private class JSObject {
         @JavascriptInterface
         public void onItemClick(String link) {
             openWebContent(link);
         }
+
+        @JavascriptInterface
+        public void onShareClick(String title, String link) {
+            shareContent(title, link);
+        }
+
     }
 }
