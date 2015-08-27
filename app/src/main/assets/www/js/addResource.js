@@ -34,7 +34,7 @@
 	                that.errors.showAllMessages();
 	            }
 	        }
-			self.renderContent = function(title,link)
+			self.renderInput = function(title,link)
 			{
     			self.viewModel.link(link);
 	    		self.viewModel.title(title);
