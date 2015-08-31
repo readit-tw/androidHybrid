@@ -28,8 +28,10 @@
                     android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".activity.AddResourceActivity" >
+        <activity android:name=".activity.AddResourceActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
+
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>

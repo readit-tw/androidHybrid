@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,6 +29,7 @@ public class AddResourceActivity extends AppCompatActivity {
 
     private WebView webView;
     private android.support.v7.widget.Toolbar toolbar;
+    private Button shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,8 @@ public class AddResourceActivity extends AppCompatActivity {
     private void init() {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.addContent);
+        shareButton = (Button) findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new ShareClickListener());
     }
 
     private class WebViewClient extends android.webkit.WebViewClient {
@@ -95,4 +100,13 @@ public class AddResourceActivity extends AppCompatActivity {
             readIntentContent();
         }
     }
+
+    private class ShareClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+            webView.loadUrl("javascript:addView.viewModel.addResource()");
+        }
+    }
+
 }

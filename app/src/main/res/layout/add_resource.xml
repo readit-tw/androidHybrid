@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <include
@@ -10,10 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"></include>
 
-
     <WebView
         android:id="@+id/addResourceWebView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" />
+
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/themeColor"
+        android:text="@string/share"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

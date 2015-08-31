@@ -28,7 +28,6 @@
 	        that.addResource = function() {
 	            if (that.isValid()) {
 	               that.tags = $("#tags").materialtags('items');
-	               //prompt("ADD_RESOURCE", ko.toJSON(this));
 	               AddResource.onSave(ko.toJSON(this));
 	            } else {
 	                that.errors.showAllMessages();
