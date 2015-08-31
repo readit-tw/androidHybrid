@@ -1618,11 +1618,31 @@
 .transparent-text {
   color: transparent !important; }
 
-img.circle {
-  position: absolute; }
+.listIcon {
+  max-width: 30px;
+  max-height: 30px;
+  vertical-align: middle;
+  width: 10%;
+  float: left; }
 
 span.title {
-  margin-left: 40px; }
+  width: 85%;
+  display: -webkit-box;
+  float: left;
+  padding: 0px 0 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; }
+
+.listItem {
+  overflow: hidden; }
+
+.shareIcon {
+  width: 5%;
+  vertical-align: middle;
+  float: right;
+  padding-top: 5px; }
 
 /*** Colors ***/
 /*** Badges ***/

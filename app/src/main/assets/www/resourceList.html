@@ -12,12 +12,12 @@
 	
 	<body onLoad="renderList();">
 		<ul class="collection" data-bind="foreach: items">
-			<li class="collection-item " data-bind="click: $parent.itemClick">
+			<li class="collection-item listItem" data-bind="click: $parent.itemClick">
 				<!--<i class="material-icons circle red">play_arrow</i>-->
-				<img data-bind="attr:{ src: baseUrl }" class="responsive-img"/>
+				<img data-bind="attr:{ src: baseUrl }" class="responsive-img listIcon"/>
 
- 				<span class="title" data-bind="text:title" ></span>
-				<a href="#!" class="secondary-content" data-bind="click:$parent.shareClick, clickBubble:false"><i class="material-icons">share</i></a>
+ 				<span class="title " data-bind="text:title" ></span>
+				<a href="#!" class="shareIcon" data-bind="click:$parent.shareClick, clickBubble:false"><i class="material-icons">share</i></a>
  			</li> 			
 		</ul>
 	</body>
