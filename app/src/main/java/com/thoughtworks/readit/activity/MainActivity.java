@@ -1,7 +1,9 @@
 package com.thoughtworks.readit.activity;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.thoughtworks.readit.R;
 import com.thoughtworks.readit.domain.Resource;
+import com.thoughtworks.readit.network.NetworkService;
 import com.thoughtworks.readit.network.RestService;
 
 import retrofit.Callback;
@@ -48,6 +51,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!NetworkService.isNetWorkAvailable(MainActivity.this)) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            // set title
+            alertDialogBuilder.setTitle("Warning");
+            alertDialogBuilder.setMessage("Check your network connection and try again!");
+            // set dialog message
+            alertDialogBuilder.setCancelable(false).setNegativeButton(
+                            "Ok", new DialogInterface.OnClickListener() {
+                                     public void onClick(DialogInterface dialog, int id) {
+                                }});
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
+            //check user really enable or not
+            return;
+        }
         webView = (WebView) findViewById(R.id.webContent);
         webView.loadUrl("file:///android_asset/www/resourceList.html");
         webView.addJavascriptInterface(new JSObject(), "ListView");
@@ -169,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadResources() {
+        progressBar.setVisibility(View.VISIBLE);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://readit.thoughtworks.com")
                 .build();
@@ -184,11 +207,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("", "Content Loaded" + json);
 
+                progressBar.setVisibility(View.GONE);
                 webView.loadUrl("javascript:onListLoad(" + json + ")");
             }
 
             @Override
             public void failure(RetrofitError error) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Please try later!", Toast.LENGTH_LONG).show();
             }
         });
