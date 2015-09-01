@@ -59,7 +59,6 @@ public class AddResourceActivity extends AppCompatActivity {
                 @Override
                 public void success(Resource resource, Response response) {
                     Toast.makeText(AddResourceActivity.this, "Successfully added!", Toast.LENGTH_LONG).show();
-
                     Intent addResourceIntent = new Intent(AddResourceActivity.this, MainActivity.class);
                     startActivity(addResourceIntent);
                 }
@@ -104,7 +103,7 @@ public class AddResourceActivity extends AppCompatActivity {
 
     private void renderShareButton()
     {
-        shareButton.setVisibility(View.VISIBLE);
+        findViewById(R.id.shareButtonContainer).setVisibility(View.VISIBLE);
     }
 
     private class ShareClickListener implements View.OnClickListener
