@@ -70,17 +70,13 @@ public class MainActivity extends AppCompatActivity {
             //check user really enable or not
             return;
         }
-        webView = (WebView) findViewById(R.id.webContent);
-        webView.loadUrl("file:///android_asset/www/resourceList.html");
-        webView.addJavascriptInterface(new JSObject(), "ListView");
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
 
         handleIntent(getIntent());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
+        Log.d("","-- MainActivity--onNewIntent--");
         handleIntent(intent);
     }
 
@@ -161,11 +157,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
+            Log.d("","-- MainActivity --Action intent.getAction()");
             init();
         }
     }
 
     protected void init() {
+        webView = (WebView) findViewById(R.id.webContent);
+        webView.loadUrl("file:///android_asset/www/resourceList.html");
+        webView.addJavascriptInterface(new JSObject(), "ListView");
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
