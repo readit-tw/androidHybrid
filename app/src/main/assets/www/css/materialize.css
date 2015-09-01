@@ -1636,6 +1636,7 @@ span.title {
   -webkit-box-orient: vertical; }
 
 .listItem {
+  height: 60px;
   overflow: hidden; }
 
 .shareIcon {
