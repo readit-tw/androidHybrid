@@ -34,7 +34,6 @@ public class AddResourceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.add_resource);
         init();
         webView = (WebView) findViewById(R.id.addResourceWebView);
@@ -58,6 +57,7 @@ public class AddResourceActivity extends AppCompatActivity {
             service.shareResource(resource, new Callback<Resource>() {
                 @Override
                 public void success(Resource resource, Response response) {
+                    finish();
                     Toast.makeText(AddResourceActivity.this, "Successfully added!", Toast.LENGTH_LONG).show();
                     Intent addResourceIntent = new Intent(AddResourceActivity.this, MainActivity.class);
                     startActivity(addResourceIntent);
@@ -71,8 +71,13 @@ public class AddResourceActivity extends AppCompatActivity {
         }
     }
 
-    private void readIntentContent() {
-        Intent intent = getIntent();
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        readIntentContent(intent);
+    }
+
+    private void readIntentContent(Intent intent) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             String url = bundle.getString(Intent.EXTRA_TEXT);
@@ -96,7 +101,8 @@ public class AddResourceActivity extends AppCompatActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            readIntentContent();
+            Intent intent = getIntent();
+            readIntentContent(intent);
             renderShareButton();
         }
     }
