@@ -33,11 +33,17 @@
 	                that.errors.showAllMessages();
 	            }
 	        }
-			self.renderInput = function(title,link)
+			that.renderInput = function(title,link)
 			{
-    			self.viewModel.link(link);
-	    		self.viewModel.title(title);
+    			that.link(link);
+	    		that.title(title);
 			}
+            
+            that.clear = function(){
+            
+                that.link("")
+                that.title("")
+            }
 	    }
 
 	    self.viewModel = new self.ViewModel();
@@ -48,6 +54,12 @@
 	    {
 	    	self.viewModel.submit();
 	    }
+        
+        self.clearAll = function()
+        {
+            self.viewModel.clear();
+        }
+        
 	}
 
 	var addView = new AddView();
