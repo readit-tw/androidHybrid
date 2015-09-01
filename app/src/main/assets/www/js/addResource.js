@@ -33,14 +33,13 @@
 	                that.errors.showAllMessages();
 	            }
 	        }
-			that.renderInput = function(title,link)
+			that.render = function(title,link)
 			{
     			that.link(link);
 	    		that.title(title);
 			}
             
             that.clear = function(){
-            
                 that.link("")
                 that.title("")
             }
@@ -54,6 +53,11 @@
 	    {
 	    	self.viewModel.submit();
 	    }
+
+	    self.renderInput = function(title,link)
+        {
+         	self.viewModel.render(title,link);
+        }
         
         self.clearAll = function()
         {
