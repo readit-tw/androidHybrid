@@ -47,7 +47,7 @@ function extractDomain(url) {
 	//link.protocol;  //  'http:'
 
 	// Google Shared Stuff that returns image with website's favicon by hostname
-    return "http://www.google.com/s2/favicons?domain=" + link.hostname;
+    return "http://www.google.com/s2/favicons?domain=" + url;
 }
 
 var appViewModel = new AppViewModel();
