@@ -99,6 +99,24 @@ public class MainActivity extends AppCompatActivity {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
         }
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (!query.isEmpty()) {
+                    Intent searchIntent = new Intent(MainActivity.this, MainActivity.class);
+                    searchIntent.setAction(Intent.ACTION_SEARCH);
+                    searchIntent.putExtra(SearchManager.QUERY, query);
+                    startActivity(searchIntent);
+                }
+                return false;
+            }
+        });
+
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
