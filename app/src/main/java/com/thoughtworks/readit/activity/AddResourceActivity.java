@@ -111,7 +111,7 @@ public class AddResourceActivity extends AppCompatActivity {
     {
         @Override
         public void onClick(View v) {
-            webView.loadUrl("javascript:addView.viewModel.addResource()");
+            webView.loadUrl("javascript:addView.addResource()");
         }
     }
 

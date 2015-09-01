@@ -25,7 +25,7 @@
 	        that.isValid = function() {
 	            return that.errors().length === 0;
 	        }
-	        that.addResource = function() {
+	        that.submit = function() {
 	            if (that.isValid()) {
 	               that.tags = $("#tags").materialtags('items');
 	               AddResource.onSave(ko.toJSON(this));
@@ -43,6 +43,10 @@
 	    self.viewModel = new self.ViewModel();
 	    self.renderContent = function() {
 	        ko.applyBindings(self.viewModel);
+	    }
+	    self.addResource = function()
+	    {
+	    	self.viewModel.submit();
 	    }
 	}
 
