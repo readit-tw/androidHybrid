@@ -1645,6 +1645,9 @@ span.title {
   float: right;
   padding-top: 5px; }
 
+.addForm {
+  margin: 0 1em 0 1em; }
+
 /*** Colors ***/
 /*** Badges ***/
 /*** Buttons ***/

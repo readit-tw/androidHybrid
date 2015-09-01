@@ -98,7 +98,13 @@ public class AddResourceActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             readIntentContent();
+            renderShareButton();
         }
+    }
+
+    private void renderShareButton()
+    {
+        shareButton.setVisibility(View.VISIBLE);
     }
 
     private class ShareClickListener implements View.OnClickListener
